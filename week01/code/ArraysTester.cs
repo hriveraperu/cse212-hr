@@ -38,8 +38,16 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        
+        // First create a result double 
+        double[] results = new double[length];
+        // then create a loop that has a length of the variable "length"
+        for (int i=0; i < length; i++) {
+            //insert the result from the multiplication
+            results[i] = number * (i+1);
+        }
 
-        return new double[0]; // replace this return statement with your own
+        return results; // return the double
     }
     
     /// <summary>
@@ -56,6 +64,25 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // First create a list to store the rotated elements
+        List<int> results = new List<int>();
+
+        // Then calculate the index from where to start adding elements to the result list 
+        int startIndex = data.Count - (amount % data.Count);
+
+        // Add elements to the result list first from the start index
+        for (int i = startIndex; i < data.Count; i++) {
+            results.Add(data[i]);
+        }
+        // Then we add from index 0 to the previous index from startIndex
+        for (int i = 0; i < startIndex; i++) {
+            results.Add(data[i]);
+        }
+        // Now we replace to the original list
+        for (int i = 0; i < data.Count; i++) {
+            data[i] = results[i];
+        }
 
     }
 }

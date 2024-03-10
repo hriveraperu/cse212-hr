@@ -37,7 +37,13 @@ public class TakingTurnsQueue {
             if (person.Turns > 1) {
                 person.Turns -= 1;
                 _people.Enqueue(person);
+                
+            } 
+            //Added Code =)
+            else if (person.Turns <= 0) {
+                _people.Enqueue(person);
             }
+            //End Added Code =)
 
             Console.WriteLine(person.Name);
         }

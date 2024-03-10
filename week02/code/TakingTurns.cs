@@ -15,7 +15,7 @@
         // Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
-        // Defect(s) Found: 
+        // Defect(s) Found: _queue.Insert(0, person); was Enqueue the person in the beginning of the line
 
         Console.WriteLine("---------");
 
@@ -38,7 +38,7 @@
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        // Defect(s) Found: None, after correcting with Test 1 =)
 
         Console.WriteLine("---------");
 
@@ -56,7 +56,7 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: The "forever" rule was not implemented, I added else if (person.Turns <= 0) { _people.Enqueue(person)}
 
         Console.WriteLine("---------");
 
@@ -73,7 +73,7 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: None after fixing the error on test 3
 
         Console.WriteLine("---------");
 
@@ -83,6 +83,6 @@
         Console.WriteLine("Test 5");
         players = new TakingTurnsQueue();
         players.GetNextPerson();
-        // Defect(s) Found:
+        // Defect(s) Found: The error message shows that no one in the queue
     }
 }

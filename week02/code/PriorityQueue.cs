@@ -22,14 +22,21 @@
 
         // Find the index of the item with the highest priority to remove
         var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++) {
-            if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
+        //for (int index = 1; index < _queue.Count -1; index++) {
+        for (int index = 0; index < _queue.Count; index++) {
+            //if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
+            if (_queue[index].Priority > _queue[highPriorityIndex].Priority)
                 highPriorityIndex = index;
         }
 
         // Remove and return the item with the highest priority
         var value = _queue[highPriorityIndex].Value;
+        //Added code
+        _queue.RemoveAt(highPriorityIndex);
+        Console.WriteLine(value);
+        //End Added Code
         return value;
+        //I dont know why is not returning value =)
     }
 
     public override string ToString() {

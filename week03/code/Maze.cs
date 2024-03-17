@@ -30,6 +30,20 @@ public class Maze {
     /// </summary>
     public void MoveLeft() {
         // FILL IN CODE
+        var left = (_currX - 1, _currY);
+
+        if (_mazeMap.ContainsKey(left)) {
+            var directions = _mazeMap[left];
+            if (directions[1]) {
+                _currX--;
+            } else {
+                Console.WriteLine("Cannot go that way!");
+            }
+        } else {
+            Console.WriteLine("Cannot go that way!");
+        }
+            
+
     }
 
     /// <summary>
@@ -38,6 +52,19 @@ public class Maze {
     /// </summary>
     public void MoveRight() {
         // FILL IN CODE
+        var right = (_currX + 1, _currY);
+
+        if (_mazeMap.ContainsKey(right)) {
+            var directions = _mazeMap[right];
+            if (directions[0]) {
+                _currX++;
+            } else {
+                Console.WriteLine("Cannot go that way!");
+            }
+        } else {
+            Console.WriteLine("Cannot go that way!");
+        }
+            
     }
 
     /// <summary>
@@ -46,6 +73,19 @@ public class Maze {
     /// </summary>
     public void MoveUp() {
         // FILL IN CODE
+        var up = (_currX, _currY - 1);
+
+        if (_mazeMap.ContainsKey(up)) {
+            var directions = _mazeMap[up];
+            if (directions[3]) {
+                _currY--;
+            } else {
+                Console.WriteLine("Cannot go that way!");
+            }
+        } else {
+            Console.WriteLine("Cannot go that way!");
+        }
+            
     }
 
     /// <summary>
@@ -54,6 +94,19 @@ public class Maze {
     /// </summary>
     public void MoveDown() {
         // FILL IN CODE
+        var down = (_currX, _currY + 1);
+
+        if (_mazeMap.ContainsKey(down)) {
+            var directions = _mazeMap[down];
+            if (directions[2]) {
+                _currY++;
+            } else {
+                Console.WriteLine("Cannot go that way!");
+            }
+        } else {
+            Console.WriteLine("Cannot go that way!");
+        }
+            
     }
 
     public void ShowStatus() {

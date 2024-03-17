@@ -108,6 +108,16 @@ public static class SetsAndMapsTester {
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     private static void DisplayPairs(string[] words) {
+        var result = new HashSet<string>();
+        foreach(var word in words) {
+            string word2 = word[1].ToString() + word[0].ToString();
+            result.Add(word);
+            if (word != word2)
+                if (result.Contains(word2))
+                    Console.WriteLine($"{word} & {word2}");
+            
+        }
+
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
@@ -131,6 +141,11 @@ public static class SetsAndMapsTester {
         var degrees = new Dictionary<string, int>();
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
+            var degree = fields[3];
+            if (degrees.ContainsKey(fields[3]))
+                degrees[degree] = degrees[degree] + 1;
+            else
+                degrees[degree] = 1;
             // Todo Problem 2 - ADD YOUR CODE HERE
         }
 
@@ -158,12 +173,41 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.ToLower().Replace(" ", "");
+        word2 = word2.ToLower().Replace(" ", "");
+        
+        ///Console.WriteLine(word1.Count() + " " + word2.Count());
+
+        if (word1.Count() != word2.Count())
+            return false;
+
+        var dictio = new Dictionary<char, int>();
+        foreach (var letter in word1) {
+            if (dictio.ContainsKey(letter))
+                dictio[letter] = dictio[letter] + 1;
+            else
+                dictio[letter] = 1;
+        }
+
+        foreach (var letter in word2) {
+            if (dictio.ContainsKey(letter))
+                if (dictio[letter] == 1)
+                    dictio.Remove(letter);
+                else
+                    dictio[letter] = dictio[letter] - 1;
+            
+            else
+                return false;
+        }
+        
+        return true;
     }
 
     /// <summary>
     /// Sets up the maze dictionary for problem 4
     /// </summary>
+    /// 
+
     private static Dictionary<ValueTuple<int, int>, bool[]> SetupMazeMap() {
         Dictionary<ValueTuple<int, int>, bool[]> map = new() {
             { (1, 1), new[] { false, true, false, true } },
@@ -203,6 +247,7 @@ public static class SetsAndMapsTester {
             { (6, 5), new[] { false, false, false, false } },
             { (6, 6), new[] { true, false, false, false } }
         };
+
         return map;
     }
 
@@ -230,10 +275,15 @@ public static class SetsAndMapsTester {
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
-
+    
         // TODO:
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        foreach (var feature in featureCollection.Features) {
+            var place = feature.Properties.Place;
+            var mag = feature.Properties.Mag;
+            Console.WriteLine($"{place} - Mag {mag}");
+        }
     }
 }

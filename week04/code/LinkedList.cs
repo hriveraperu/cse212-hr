@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Transactions;
 
 public class LinkedList : IEnumerable<int> {
     private Node? _head;
@@ -28,6 +29,20 @@ public class LinkedList : IEnumerable<int> {
     /// </summary>
     public void InsertTail(int value) {
         // TODO Problem 1
+        // Create new node
+        Node newNode = new Node(value);
+        // If the list is empty, then point both head and tail to the new node.
+        if (_head is null) {
+            _head = newNode;
+            _tail = newNode;
+        }
+        // If the list is not empty, then only tail will be affected.
+        else {
+            newNode.Next = null; // Specify the tail to next: null
+            newNode.Prev = _tail; // Specify the tail prev to old tail
+            _tail!.Next = newNode; // Connect the previous tail to the new node
+            _tail = newNode; // Update the tail to point to the new node
+        }
     }
 
 
@@ -56,6 +71,19 @@ public class LinkedList : IEnumerable<int> {
     /// </summary>
     public void RemoveTail() {
         // TODO Problem 2
+        // If the list has only one item in it, then set head and tail 
+        // to null resulting in an empty list.  This condition will also
+        // cover an empty list.  Its okay to set to null again.
+        if (_head == _tail) {
+            _head = null;
+            _tail = null;
+        }
+        // If the list has more than one item in it, then only the tail
+        // will be affected.
+        else if (_tail is not null) {
+            _tail.Prev!.Next = null; // Disconnect the second to last node from the last node
+            _tail = _tail.Prev; // Update the tail to point to the second to last node
+        }
     }
 
     /// <summary>
@@ -93,6 +121,35 @@ public class LinkedList : IEnumerable<int> {
     /// Remove the first node that contains 'value'.
     /// </summary>
     public void Remove(int value) {
+        
+        Node? curr = _head;
+        while (curr is not null) {
+            if (value == curr!.Data) {
+                if(_head == _tail) {
+                    _head = null;
+                    _tail = null;
+                }
+                else if(curr == _head) {
+                    _head = curr.Next;
+                    if (_head is not null) {
+                        _head.Prev = null;
+                    }
+                }
+                else if (curr == _tail) {
+                    _tail = curr.Prev;
+                    if (_tail is not null) {
+                        _tail.Next = null;
+                    }
+                }
+                else {
+                    curr.Prev!.Next = curr.Next;
+                    curr.Next!.Prev = curr.Prev;
+                }
+                return;    
+                
+            }
+            curr = curr.Next;
+        }
         // TODO Problem 3
     }
 
@@ -101,6 +158,17 @@ public class LinkedList : IEnumerable<int> {
     /// </summary>
     public void Replace(int oldValue, int newValue) {
         // TODO Problem 4
+        Node? curr = _head;
+        while (curr is not null) {
+            if (oldValue == curr.Data) {
+                curr.Data = newValue; // Replace the data with the new value
+                if (curr == _tail) {
+                    _tail.Data = newValue; // Update _tail to point to the current node if it's the tail node
+                }
+                
+            }
+            curr = curr.Next;
+        }
     }
 
     /// <summary>
